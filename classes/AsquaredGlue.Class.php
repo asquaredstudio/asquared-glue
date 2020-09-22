@@ -12,7 +12,7 @@ class AsquaredGlue {
 	 * AsquaredGlue constructor.
 	 */
 	private function __construct() {
-		GlueShortcodes::getInstance();
+		GlueQuotes::getInstance();
 	}
 
 	/**
