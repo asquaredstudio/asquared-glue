@@ -7,12 +7,15 @@ class AsquaredGlue {
 	 * @var null
 	 */
 	private static $instance = null;
+	public $quotes;
+	public $flatsomeFixes;
 
 	/**
 	 * AsquaredGlue constructor.
 	 */
 	private function __construct() {
-		GlueQuotes::getInstance();
+		$this->quotes = GlueQuotes::getInstance();
+		$this->flatsomeFixes = FlatsomeFixes::getInstance();
 	}
 
 	/**

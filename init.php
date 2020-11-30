@@ -22,5 +22,6 @@
  */
 
 require_once ('classes/GlueQuotes.Class.php');
+require_once ('classes/FlatsomeFixes.Class.php');
 require_once ('classes/AsquaredGlue.Class.php');
-AsquaredGlue::getInstance();
+$asquaredGlue = AsquaredGlue::getInstance();
