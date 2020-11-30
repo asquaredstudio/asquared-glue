@@ -10,7 +10,7 @@
  * Plugin Name:       (a)squared glue
  * Plugin URI:        https://asquaredstudio.com
  * Description:       Custom functionality for this theme 'n stuff.
- * Version:           0.0.4
+ * Version:           0.0.5
  * Requires at least: 5.5
  * Requires PHP:      7.0
  * Author:            Chris Carvache
