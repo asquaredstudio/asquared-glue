@@ -205,7 +205,7 @@ class GlueQuotes {
 		ob_start();
 		if ($quotes->have_posts()) {
 			// Setup location of stars PNG if needed
-			$stars  = $a['stars'] == 'true' ? '<img src="' . plugin_dir_url(__DIR__) . 'assets/img-stars.png" alt="5 Star Rating" class="review-stars"> ' : '';
+			$stars  = $a['stars'] == 'true' ? ' <img src="' . plugin_dir_url(__DIR__) . 'assets/img-stars.png" alt="5 Star Rating" class="review-stars"> ' : '';
 
 			if ($a['layout'] == 'slider') {
 				// Parse any addition slider options
@@ -236,7 +236,7 @@ class GlueQuotes {
 					$output .= '[col span__sm="12"]';
 					$output .= '<h3>' . get_the_title() . '</h3>';
 					$output .= '<div class="quote-content">' . get_the_content() . '</div>';
-					$output .= '<div class="author-content">' . $stars . '<span>-</span> ' . get_field('author') . '</div>';
+					$output .= '<div class="author-content"><span>-</span> ' . get_field('author') . $stars .'</div>';
 					$output .= '[/col]';
 					$output .= '[/row]';
 				}
