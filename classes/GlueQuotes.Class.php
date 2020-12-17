@@ -42,13 +42,13 @@ class GlueQuotes {
 				0 => 'title',
 				1 => 'editor',
 			),
-			'taxonomies'            => array(),
+			'taxonomies'            => [],
 			'public'                => true,
 			'exclude_from_search'   => false,
 			'publicly_queryable'    => true,
 			'can_export'            => true,
 			'delete_with_user'      => 'null',
-			'labels'                => array(),
+			'labels'                => [],
 			'menu_position'         => 20,
 			'menu_icon'             => 'dashicons-admin-post',
 			'show_ui'               => true,
@@ -70,7 +70,7 @@ class GlueQuotes {
 			'acfe_admin_orderby'    => 'date',
 			'acfe_admin_order'      => 'DESC',
 			'capability_type'       => 'post',
-			'capabilities'          => array(),
+			'capabilities'          => [],
 			'map_meta_cap'          => NULL,
 		));
 
@@ -87,7 +87,7 @@ class GlueQuotes {
 			'publicly_queryable'    => true,
 			'update_count_callback' => '',
 			'sort'                  => false,
-			'labels'                => array(),
+			'labels'                => [],
 			'show_ui'               => true,
 			'show_in_menu'          => true,
 			'show_in_nav_menus'     => true,
@@ -105,7 +105,7 @@ class GlueQuotes {
 			'acfe_admin_ppp'        => 10,
 			'acfe_admin_orderby'    => 'name',
 			'acfe_admin_order'      => 'ASC',
-			'capabilities'          => array(),
+			'capabilities'          => [],
 			'meta_box_cb'           => NULL,
 		));
 
@@ -173,12 +173,18 @@ class GlueQuotes {
 	 */
 	function outputQuotes($attributes) {
 		$a = shortcode_atts(array(
+			'layout'         => 'slider',
+			'orderby'        => 'none',
 			'posts_per_page' => 3,
 			'category'       => null,
-			'nav_pos'        => null
+			'nav_pos'        => null,
+			'stars'          => false,
+			'arrows'		=> true,
+			'bullets'		=> true
 		), $attributes);
 
 		$args = [
+			'orderby'        => $a['orderby'],
 			'post_type'      => 'quotes',
 			'posts_per_page' => $a['posts_per_page']
 		];
@@ -198,33 +204,67 @@ class GlueQuotes {
 
 		ob_start();
 		if ($quotes->have_posts()) {
-			// Parse any addition slider options
-			$slider_options = [];
+			// Setup location of stars PNG if needed
+			$stars  = $a['stars'] == 'true' ? '<img src="' . plugin_dir_url(__DIR__) . 'assets/img-stars.png" alt="5 Star Rating" class="review-stars"> ' : '';
 
-			if (isset($a['nav_pos'])) {
-				$slider_options['nav_pos'] == 'nav_pos="' . $a['nav_pos'] . '"';
+			if ($a['layout'] == 'slider') {
+				// Parse any addition slider options
+				$slider_options = [];
+
+				if (isset($a['nav_pos'])) {
+					$slider_options['nav_pos'] = 'nav_pos="' . $a['nav_pos'] . '"';
+				}
+
+				if (isset($a['bullets'])) {
+					$slider_options['bullets'] = 'bullets="' . $a['bullets'] . '"';
+				}
+
+				if (isset($a['arrows'])) {
+					$slider_options['arrows'] = 'arrows="' . $a['arrows'] . '"';
+				}
+
+				//print_r($slider_options);
+
+				$output = '<div class="quotes-slider">';
+				$output .= count($slider_options) > 0 ? '[ux_slider ' . implode(' ', $slider_options) . ']' : '[ux_slider]';
+
+
+
+				while ($quotes->have_posts()) {
+					$quotes->the_post();
+					$output .= '[row]';
+					$output .= '[col span__sm="12"]';
+					$output .= '<h3>' . get_the_title() . '</h3>';
+					$output .= '<div class="quote-content">' . get_the_content() . '</div>';
+					$output .= '<div class="author-content">' . $stars . '<span>-</span> ' . get_field('author') . '</div>';
+					$output .= '[/col]';
+					$output .= '[/row]';
+				}
+
+				$output .= '[/ux_slider]';
+				$output .= '</div>';
+
 			}
 
-			//$output = count($slider_options) > 0 ? '[ux_slider' . implode(' ', $slider_options) . ']' : '[ux_slider]';
-			$output = '<div class="quotes-slider">';
-			$output .= '[ux_slider]';
+			if ($a['layout'] == 'list') {
+				$output = '<div class="quotes-list">';
+				$output .= '<ul class="list-inline">';
 
-			while ($quotes->have_posts()) {
-				$quotes->the_post();
-				$output .= '[row]';
-				$output .= '[col span__sm="12"]';
-				$output .= '<h3>' . get_the_title() . '</h3>';
-				$output .= '<div class="quote-content">' . get_the_content() . '</div>';
-				$output .= '<div class="author-content"><span>-</span> ' . get_field('author') . '</div>';
-				$output .= '[/col]';
-				$output .= '[/row]';
+				while ($quotes->have_posts()) {
+					$quotes->the_post();
+					$output .= '<li>';
+					$output .= '<h3>' . get_the_title() . '</h3>';
+					$output .= '<div class="quote-content">' . get_the_content() . '</div>';
+					$output .= '<div class="author-content">' . $stars . '<span>-</span> ' . get_field('author') . '</div>';
+					$output .= '</li>';
+				}
+
+				$output .= '</ul>';
+				$output .= '</div>';
 			}
-
-			$output .= '[/ux_slider]';
-			$output .= '</div>';
 
 			echo do_shortcode($output);
-			//echo $output;
+
 
 		}
 
@@ -232,4 +272,5 @@ class GlueQuotes {
 
 		return ob_get_clean();
 	}
+
 }
