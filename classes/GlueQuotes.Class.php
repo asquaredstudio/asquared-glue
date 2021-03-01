@@ -236,7 +236,7 @@ class GlueQuotes {
 					$output .= '[col span__sm="12"]';
 					$output .= '<h3>' . get_the_title() . '</h3>';
 					$output .= '<div class="quote-content">' . get_the_content() . '</div>';
-					$output .= '<div class="author-content"><span>-</span> ' . get_field('author') . $stars .'</div>';
+					$output .= '<div class="author-content"><span class="dash">-</span> ' . get_field('author') . '<span class="stars">' . $stars .'</span></div>';
 					$output .= '[/col]';
 					$output .= '[/row]';
 				}

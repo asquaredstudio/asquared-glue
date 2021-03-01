@@ -7,7 +7,9 @@ class AsquaredGlue {
 	 * @var null
 	 */
 	private static $instance = null;
+
 	public $quotes;
+	
 	public $flatsomeFixes;
 
 	/**
