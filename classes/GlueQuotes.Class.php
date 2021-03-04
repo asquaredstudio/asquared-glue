@@ -175,12 +175,14 @@ class GlueQuotes {
 		$a = shortcode_atts(array(
 			'layout'         => 'slider',
 			'orderby'        => 'none',
-			'posts_per_page' => 3,
+			'posts_per_page' => 12,
+			'columns'        => 1,
+			'show_titles'    => true,
 			'category'       => null,
 			'nav_pos'        => null,
 			'stars'          => false,
-			'arrows'		=> true,
-			'bullets'		=> true
+			'arrows'         => true,
+			'bullets'        => true
 		), $attributes);
 
 		$args = [
@@ -205,7 +207,7 @@ class GlueQuotes {
 		ob_start();
 		if ($quotes->have_posts()) {
 			// Setup location of stars PNG if needed
-			$stars  = $a['stars'] == 'true' ? ' <img src="' . plugin_dir_url(__DIR__) . 'assets/img-stars.png" alt="5 Star Rating" class="review-stars"> ' : '';
+			$stars = $a['stars'] == 'true' ? ' <img src="' . plugin_dir_url(__DIR__) . 'assets/img-stars.png" alt="5 Star Rating" class="review-stars"> ' : '';
 
 			if ($a['layout'] == 'slider') {
 				// Parse any addition slider options
@@ -223,21 +225,38 @@ class GlueQuotes {
 					$slider_options['arrows'] = 'arrows="' . $a['arrows'] . '"';
 				}
 
-				//print_r($slider_options);
-
 				$output = '<div class="quotes-slider">';
 				$output .= count($slider_options) > 0 ? '[ux_slider ' . implode(' ', $slider_options) . ']' : '[ux_slider]';
 
+				$grid_span = 12 / $a['columns'];
 
-
+				$counter = 0;
+				$closed = false;
 				while ($quotes->have_posts()) {
 					$quotes->the_post();
-					$output .= '[row]';
-					$output .= '[col span__sm="12"]';
-					$output .= '<h3>' . get_the_title() . '</h3>';
+					$counter++;
+					if ($counter == 1) {
+						$output .= '[row]';
+						$closed = false;
+					}
+
+
+					$output .= '[col span__sm="12" span="' . $grid_span . '"]';
+					if	($a['show_titles'] == true) {
+						$output .= '<h3>' . get_the_title() . '</h3>';
+					}
 					$output .= '<div class="quote-content">' . get_the_content() . '</div>';
-					$output .= '<div class="author-content"><span class="dash">-</span> ' . get_field('author') . '<span class="stars">' . $stars .'</span></div>';
+					$output .= '<div class="author-content"><span class="dash">-</span> ' . get_field('author') . '<span class="stars">' . $stars . '</span></div>';
 					$output .= '[/col]';
+
+					if ($a['columns'] == $counter) {
+						$output .= '[/row]';
+						$counter = 0;
+						$closed = true;
+					}
+				}
+
+				if ($closed == false) {
 					$output .= '[/row]';
 				}
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class AsquaredGlue
  */
@@ -8,15 +9,21 @@ class AsquaredGlue {
 	 */
 	private static $instance = null;
 
+	/**
+	 * @var null|\GlueQuotes
+	 */
 	public $quotes;
-	
+
+	/**
+	 * @var null|\FlatsomeFixes
+	 */
 	public $flatsomeFixes;
 
 	/**
 	 * AsquaredGlue constructor.
 	 */
 	private function __construct() {
-		$this->quotes = GlueQuotes::getInstance();
+		$this->quotes        = GlueQuotes::getInstance();
 		$this->flatsomeFixes = FlatsomeFixes::getInstance();
 	}
 
