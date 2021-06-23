@@ -26,6 +26,25 @@ class FlatsomeFixes {
 	function actionMapper() {
 		remove_action( 'flatsome_footer', 'flatsome_page_footer', 10 );
 		add_action('flatsome_footer', [$this, 'newFlatsomeFooter'], 10);
+		add_action('wp_head', [$this, 'insertCSSVariables'], 0);
+	}
+
+	/**
+	 * Inserts :root level CSS variables
+	 *
+	 * @return string
+	 */
+	function insertCSSVariables() {
+		?>
+		<style>
+			:root {
+				--primary-color: <?php echo get_theme_mod('color_primary', Flatsome_Default::COLOR_PRIMARY ); ?>;
+				--secondary-color: <?php echo get_theme_mod('color_primary', Flatsome_Default::COLOR_SECONDARY ); ?>;
+				--alert-color: <?php echo get_theme_mod('color_primary', Flatsome_Default::COLOR_ALERT ); ?>;
+				--success-color: <?php echo get_theme_mod('color_primary', Flatsome_Default::COLOR_SUCCESS ); ?>;
+			}
+		</style>
+		<?php
 	}
 
 	/**
