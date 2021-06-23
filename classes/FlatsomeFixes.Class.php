@@ -39,9 +39,9 @@ class FlatsomeFixes {
 		<style>
 			:root {
 				--primary-color: <?php echo get_theme_mod('color_primary', Flatsome_Default::COLOR_PRIMARY ); ?>;
-				--secondary-color: <?php echo get_theme_mod('color_primary', Flatsome_Default::COLOR_SECONDARY ); ?>;
-				--alert-color: <?php echo get_theme_mod('color_primary', Flatsome_Default::COLOR_ALERT ); ?>;
-				--success-color: <?php echo get_theme_mod('color_primary', Flatsome_Default::COLOR_SUCCESS ); ?>;
+				--secondary-color: <?php echo get_theme_mod('color_secondary', Flatsome_Default::COLOR_SECONDARY ); ?>;
+				--alert-color: <?php echo get_theme_mod('color_alert', Flatsome_Default::COLOR_ALERT ); ?>;
+				--success-color: <?php echo get_theme_mod('color_success', Flatsome_Default::COLOR_SUCCESS ); ?>;
 			}
 		</style>
 		<?php
