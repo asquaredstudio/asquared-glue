@@ -20,11 +20,18 @@ class AsquaredGlue {
 	public $flatsomeFixes;
 
 	/**
+	 * @var null|\a2Marketing
+	 */
+	public $marketing;
+
+	
+	/**
 	 * AsquaredGlue constructor.
 	 */
 	private function __construct() {
 		$this->quotes        = GlueQuotes::getInstance();
 		$this->flatsomeFixes = FlatsomeFixes::getInstance();
+		$this->marketing     = a2Marketing::getInstance();
 	}
 
 	/**

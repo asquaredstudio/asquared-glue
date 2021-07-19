@@ -10,7 +10,7 @@
  * Plugin Name:       (a)squared glue
  * Plugin URI:        https://asquaredstudio.com
  * Description:       Custom functionality for this theme 'n stuff.
- * Version:           0.1.6
+ * Version:           0.2.0
  * Requires at least: 5.5
  * Requires PHP:      7.0
  * Author:            Chris Carvache
@@ -23,5 +23,7 @@
 
 require_once ('classes/GlueQuotes.Class.php');
 require_once ('classes/FlatsomeFixes.Class.php');
+require_once ('classes/a2Marketing.Class.php');
 require_once ('classes/AsquaredGlue.Class.php');
+
 $asquaredGlue = AsquaredGlue::getInstance();
