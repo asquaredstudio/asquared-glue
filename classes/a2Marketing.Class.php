@@ -82,7 +82,7 @@ class a2Marketing {
 		wp_add_dashboard_widget('asquared_greeting', esc_html__('Greetings from (a)squaredstudio', 'wporg'), [$this, 'asquared_greeting_function']);
 		global $wp_meta_boxes;
 
-		if ($wp_meta_boxes['dashboard']['normal']['high']) {
+		if (isset($wp_meta_boxes['dashboard']['normal']['high'])) {
 			foreach ($wp_meta_boxes['dashboard']['normal']['high'] as $key =>  $value) {
 				if (!in_array($key, $this->allowedWidgets)) {
 					unset($wp_meta_boxes['dashboard']['normal']['high'][$key]);
@@ -91,7 +91,7 @@ class a2Marketing {
 		}
 
 
-		if ($wp_meta_boxes['dashboard']['normal']['core']) {
+		if (isset($wp_meta_boxes['dashboard']['normal']['core'])) {
 			foreach ($wp_meta_boxes['dashboard']['normal']['core'] as $key =>  $value) {
 				if (!in_array($key, $this->allowedWidgets)) {
 					unset($wp_meta_boxes['dashboard']['normal']['core'][$key]);
@@ -100,7 +100,7 @@ class a2Marketing {
 		}
 
 
-		if ($wp_meta_boxes['dashboard']['side']['core']) {
+		if (isset($wp_meta_boxes['dashboard']['side']['core'])) {
 			foreach ($wp_meta_boxes['dashboard']['side']['core'] as $key =>  $value) {
 				if (!in_array($key, $this->allowedWidgets)) {
 					unset($wp_meta_boxes['dashboard']['side']['core'][$key]);
