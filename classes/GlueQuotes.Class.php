@@ -207,7 +207,7 @@ class GlueQuotes {
 		ob_start();
 		if ($quotes->have_posts()) {
 			// Setup location of stars PNG if needed
-			$stars = $a['stars'] == 'true' ? ' <img src="' . plugin_dir_url(__DIR__) . 'assets/img-stars.png" alt="5 Star Rating" class="review-stars"> ' : '';
+			$stars = $a['stars'] == true ? ' <img src="' . plugin_dir_url(__DIR__) . 'assets/img-stars.png" alt="5 Star Rating" class="review-stars"> ' : '';
 
 			if ($a['layout'] == 'slider') {
 				// Parse any addition slider options
