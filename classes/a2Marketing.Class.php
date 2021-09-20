@@ -1,4 +1,5 @@
 <?php
+namespace asquaredGlue;
 
 /**
  * Class a2Marketing
@@ -35,42 +36,41 @@ class a2Marketing {
 	 */
 	private function __construct() {
 		$this->maintenanceNagInterval = 7890000;                    // 3 month interval
-		$this->dashboardColumns = 2;
-		$this->allowedWidgets =  [
+		$this->dashboardColumns       = 2;
+		$this->allowedWidgets         = [
 			'dashboard_site_health',
 			'asquared_greeting',
-//			'rg_forms_dashboard',
+			//			'rg_forms_dashboard',
 			'dashboard_activity',
 			'dashboard_right_now'
 		];
 
-		add_action('admin_notices', [$this, 'maintenanceNag']);
-		add_action('wp_dashboard_setup', [$this, 'addDashboardGreeting'],900);
+		add_action( 'admin_notices', [ $this, 'maintenanceNag' ] );
+		add_action( 'wp_dashboard_setup', [ $this, 'addDashboardGreeting' ], 900 );
 
-//		add_filter( 'screen_layout_columns', [$this, 'single_screen_columns'] );
-//		add_filter( 'get_user_option_screen_layout_dashboard', [$this, 'single_screen_dashboard'] );
+		//		add_filter( 'screen_layout_columns', [$this, 'single_screen_columns'] );
+		//		add_filter( 'get_user_option_screen_layout_dashboard', [$this, 'single_screen_dashboard'] );
 	}
-
-	function single_screen_columns( $columns ) {
-		$columns['dashboard'] = $this->dashboardColumns;
-		return $columns;
-	}
-
-
-	function single_screen_dashboard(){
-		return $this->dashboardColumns;
-	}
-
 
 	/**
 	 * @return null|\a2Marketing
 	 */
 	static function getInstance() {
-		if (self::$instance == null) {
-			self::$instance = new a2Marketing();
+		if ( self::$instance == null ) {
+			self::$instance = new self;
 		}
 
 		return self::$instance;
+	}
+
+	function single_screen_columns( $columns ) {
+		$columns['dashboard'] = $this->dashboardColumns;
+
+		return $columns;
+	}
+
+	function single_screen_dashboard() {
+		return $this->dashboardColumns;
 	}
 
 	/**
@@ -79,31 +79,34 @@ class a2Marketing {
 	 * Removes ALL dashboard widgets
 	 */
 	function addDashboardGreeting() {
-		wp_add_dashboard_widget('asquared_greeting', esc_html__('Greetings from (a)squaredstudio', 'wporg'), [$this, 'asquared_greeting_function']);
+		wp_add_dashboard_widget( 'asquared_greeting', esc_html__( 'Greetings from (a)squaredstudio', 'wporg' ), [
+			$this,
+			'asquared_greeting_function'
+		] );
 		global $wp_meta_boxes;
 
-		if (isset($wp_meta_boxes['dashboard']['normal']['high'])) {
-			foreach ($wp_meta_boxes['dashboard']['normal']['high'] as $key =>  $value) {
-				if (!in_array($key, $this->allowedWidgets)) {
-					unset($wp_meta_boxes['dashboard']['normal']['high'][$key]);
+		if ( isset( $wp_meta_boxes['dashboard']['normal']['high'] ) ) {
+			foreach ( $wp_meta_boxes['dashboard']['normal']['high'] as $key => $value ) {
+				if ( ! in_array( $key, $this->allowedWidgets ) ) {
+					unset( $wp_meta_boxes['dashboard']['normal']['high'][ $key ] );
 				}
 			}
 		}
 
 
-		if (isset($wp_meta_boxes['dashboard']['normal']['core'])) {
-			foreach ($wp_meta_boxes['dashboard']['normal']['core'] as $key =>  $value) {
-				if (!in_array($key, $this->allowedWidgets)) {
-					unset($wp_meta_boxes['dashboard']['normal']['core'][$key]);
+		if ( isset( $wp_meta_boxes['dashboard']['normal']['core'] ) ) {
+			foreach ( $wp_meta_boxes['dashboard']['normal']['core'] as $key => $value ) {
+				if ( ! in_array( $key, $this->allowedWidgets ) ) {
+					unset( $wp_meta_boxes['dashboard']['normal']['core'][ $key ] );
 				}
 			}
 		}
 
 
-		if (isset($wp_meta_boxes['dashboard']['side']['core'])) {
-			foreach ($wp_meta_boxes['dashboard']['side']['core'] as $key =>  $value) {
-				if (!in_array($key, $this->allowedWidgets)) {
-					unset($wp_meta_boxes['dashboard']['side']['core'][$key]);
+		if ( isset( $wp_meta_boxes['dashboard']['side']['core'] ) ) {
+			foreach ( $wp_meta_boxes['dashboard']['side']['core'] as $key => $value ) {
+				if ( ! in_array( $key, $this->allowedWidgets ) ) {
+					unset( $wp_meta_boxes['dashboard']['side']['core'][ $key ] );
 				}
 			}
 		}
@@ -119,7 +122,7 @@ class a2Marketing {
 		$output[] = '&nbsp;';
 		$output[] = '<a href="https://asquaredstudio.com" class="button button-primary" target="_blank"><span class="dashicons dashicons-admin-site-alt2" style="padding-top: 5px"></span> asquaredstudio.com</a>';
 
-		echo implode('', $output);
+		echo implode( '', $output );
 	}
 
 	/**
@@ -127,12 +130,12 @@ class a2Marketing {
 	 * a maintenance package.
 	 */
 	function maintenanceNag() {
-//		$now = time();
-//		$last_nag = get_option('maintenance_nag');
-//		update_option('maintenance_nag', $now);
-//		$message = [];
-//		$message[] = 'This nag last appeared at ' . $now . '.';
-//		$message[] = 'The last SAVED time this appeared was at ' . $last_nag . '.';
+		//		$now = time();
+		//		$last_nag = get_option('maintenance_nag');
+		//		update_option('maintenance_nag', $now);
+		//		$message = [];
+		//		$message[] = 'This nag last appeared at ' . $now . '.';
+		//		$message[] = 'The last SAVED time this appeared was at ' . $last_nag . '.';
 		?>
 		<!--		<div class="notice notice-success is-dismissible">-->
 		<!--			<p>--><?php //_e( implode('<br>', $message), 'sample-text-domain' ); ?><!--</p>-->

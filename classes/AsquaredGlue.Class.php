@@ -1,4 +1,5 @@
 <?php
+namespace asquaredGlue;
 
 /**
  * Class AsquaredGlue
@@ -24,12 +25,12 @@ class AsquaredGlue {
 	 */
 	public $marketing;
 
-	
+
 	/**
 	 * AsquaredGlue constructor.
 	 */
 	private function __construct() {
-		$this->quotes        = GlueQuotes::getInstance();
+//		$this->quotes        = GlueQuotes::getInstance();
 		$this->flatsomeFixes = FlatsomeFixes::getInstance();
 		$this->marketing     = a2Marketing::getInstance();
 	}
@@ -38,7 +39,7 @@ class AsquaredGlue {
 	 * @return null|\AsquaredGlue
 	 */
 	static function getInstance() {
-		if (self::$instance == null) {
+		if ( self::$instance == null ) {
 			self::$instance = new AsquaredGlue();
 		}
 

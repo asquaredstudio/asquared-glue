@@ -1,4 +1,5 @@
 <?php
+namespace asquaredGlue;
 /**
  * (a)squared glue
  *
@@ -10,7 +11,7 @@
  * Plugin Name:       (a)squared glue
  * Plugin URI:        https://asquaredstudio.com
  * Description:       Custom functionality for this theme 'n stuff.
- * Version:           0.2.3
+ * Version:           0.3.0
  * Requires at least: 5.5
  * Requires PHP:      7.0
  * Author:            Chris Carvache
@@ -21,9 +22,19 @@
  * GitHub Plugin URI: https://github.com/asquaredstudio/asquared-glue
  */
 
-require_once ('classes/GlueQuotes.Class.php');
-require_once ('classes/FlatsomeFixes.Class.php');
-require_once ('classes/a2Marketing.Class.php');
-require_once ('classes/AsquaredGlue.Class.php');
+
+/**
+ * Quick Class Auto Loader
+ */
+spl_autoload_register( function ( $class ) {
+	$dir  = plugin_dir_path( __FILE__ ) . 'classes/';
+	$file = str_replace( '\\', '/', $class ) . '.Class.php';
+	$file = str_replace( __NAMESPACE__ . '/', '', $file);
+	$path = $dir . $file;
+
+	if ( file_exists( $path ) ) {
+		require_once $path;
+	}
+} );
 
 $asquaredGlue = AsquaredGlue::getInstance();

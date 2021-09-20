@@ -1,5 +1,5 @@
 <?php
-
+namespace asquaredGlue;
 /**
  * Class GlueQuotes
  */
@@ -22,7 +22,7 @@ class GlueQuotes {
 	 */
 	static function getInstance() {
 		if (self::$instance == null) {
-			self::$instance = new GlueQuotes();
+			self::$instance = new self;
 		}
 
 		return self::$instance;
