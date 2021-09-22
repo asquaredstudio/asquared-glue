@@ -11,7 +11,7 @@ namespace asquaredGlue;
  * Plugin Name:       (a)squared glue
  * Plugin URI:        https://asquaredstudio.com
  * Description:       Custom functionality for this theme 'n stuff.
- * Version:           0.3.0
+ * Version:           0.3.1
  * Requires at least: 5.5
  * Requires PHP:      7.0
  * Author:            Chris Carvache
@@ -37,4 +37,4 @@ spl_autoload_register( function ( $class ) {
 	}
 } );
 
-$asquaredGlue = AsquaredGlue::getInstance();
+$asquaredGlue = Plugin::getInstance();

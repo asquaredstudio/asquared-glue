@@ -202,7 +202,7 @@ class GlueQuotes {
 			];
 		}
 
-		$quotes = new WP_Query($args);
+		$quotes = new \WP_Query($args);
 
 		ob_start();
 		if ($quotes->have_posts()) {
